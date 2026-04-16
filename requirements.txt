@@ -1,0 +1,6 @@
+streamlit
+pandas
+python-dotenv
+psycopg2-binary
+boto3
+openpyxl
