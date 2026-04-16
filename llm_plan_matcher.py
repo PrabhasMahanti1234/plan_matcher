@@ -105,17 +105,28 @@ def get_state_variants(state_input: str) -> List[str]:
 # ─────────────────────────────────────────────────────────────
 # CONFIGURATION
 # ─────────────────────────────────────────────────────────────
+def get_env_var(key, default=None):
+    import os
+    try:
+        import streamlit as st
+        # If running inside streamlit, st.secrets will be accessible
+        if key in st.secrets:
+            return st.secrets[key]
+    except Exception:
+        pass
+    return os.environ.get(key, default)
+
 # Database Connection Details
-DB_HOST      = os.getenv("DB_HOST")
-DB_NAME      = os.getenv("DB_NAME")
-DB_USER      = os.getenv("DB_USER")
-DB_PASSWORD  = os.getenv("DB_PASSWORD")
-DB_PORT      = os.getenv("DB_PORT")
+DB_HOST      = get_env_var("DB_HOST")
+DB_NAME      = get_env_var("DB_NAME")
+DB_USER      = get_env_var("DB_USER")
+DB_PASSWORD  = get_env_var("DB_PASSWORD")
+DB_PORT      = get_env_var("DB_PORT")
 
 # Bedrock Configuration
-AWS_ACCESS_KEY_ID     = os.getenv("AWS_ACCESS_KEY_ID")
-AWS_SECRET_ACCESS_KEY = os.getenv("AWS_SECRET_ACCESS_KEY")
-AWS_REGION            = os.getenv("AWS_BEDROCK_REGION", "us-east-1")
+AWS_ACCESS_KEY_ID     = get_env_var("AWS_ACCESS_KEY_ID")
+AWS_SECRET_ACCESS_KEY = get_env_var("AWS_SECRET_ACCESS_KEY")
+AWS_REGION            = get_env_var("AWS_BEDROCK_REGION", "us-east-1")
 BEDROCK_MODEL_ID      = "meta.llama3-8b-instruct-v1:0"
 
 # Matching Logic Thresholds
