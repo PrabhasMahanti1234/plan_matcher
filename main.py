@@ -1,9 +1,19 @@
-import streamlit as st
-import pandas as pd
 import os
+import sys
 import time
 import datetime
+
+import pandas as pd
+import streamlit as st
 from dotenv import load_dotenv
+
+
+if __name__ == "__main__" and os.environ.get("PLAN_MATCHER_STREAMLIT_BOOTSTRAP") != "1":
+    os.environ["PLAN_MATCHER_STREAMLIT_BOOTSTRAP"] = "1"
+    from streamlit.web import cli as stcli
+
+    sys.argv = ["streamlit", "run", os.path.abspath(__file__)]
+    raise SystemExit(stcli.main())
 
 # Import the core matching logic
 try:
